@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee Website - Order</title>
+
+  <!-- Swiper JS CSS -->
+  <link rel="stylesheet" href="css/swiper-bundle.min.css">
+  <!-- Boxicons -->
+  <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/Responsive.css">
+
+  <style>
+    .order { padding: 50px 0; background-color: var(--section-bg); }
+    .order-container { text-align: center; }
+    .order-menu { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 20px; }
+    .order-item { background-color: #fff; padding: 15px; border-radius: 8px; width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.2s ease; }
+    .order-item:hover { transform: translateY(-5px); }
+    .order-title { font-size: 18px; margin-bottom: 8px; font-weight: bold; }
+    .order-price { font-size: 16px; color: #333; }
+    .order-button { margin-top: 10px; padding: 8px 12px; background-color: #b5651d; color: #fff;
+      border: none; cursor: pointer; border-radius: 5px; transition: background 0.3s ease; }
+    .order-button:hover { background-color: #8b4513; }
+
+    .cart { margin-top: 40px; padding: 20px; max-width: 500px; margin-left: auto; margin-right: auto;
+      border-radius: 12px; background: #fafafa; box-shadow: 0 4px 12px rgba(0,0,0,0.15); text-align: left; }
+    .cart h4 { text-align: center; margin-bottom: 15px; }
+    .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; background: #fff;
+      padding: 8px 10px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .cart-total { font-weight: bold; margin-top: 15px; font-size: 18px; text-align: right; }
+
+    .popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: #fff; padding: 20px 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      text-align: center; z-index: 9999; }
+    .popup.active { display: block; animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from {opacity: 0; transform: translate(-50%, -60%);} to {opacity: 1; transform: translate(-50%, -50%);} }
+
+    body { margin: 0; padding: 0; background-color: var(--section-bg); }
+    main { min-height: 100vh; background-color: var(--section-bg); }
+  </style>
+</head>
+<body>
+<header class="header">
+  <nav class="nav container flex">
+    <a href="index.html" class="logo-content flex">
+      <i class="bx bx-coffee logo-icon"></i>
+      <span class="logo-text">Coffee Craft</span>
+    </a>
+  </nav>
+</header>
+
+<main>
+  <section class="section order" id="order">
+    <div class="order-container container">
+      <h4 class="section-subtitle"><i>Order Online</i></h4>
+      <h2 class="section-title">Place Your Order</h2>
+
+      <div class="order-menu">
+        <div class="order-item">
+          <h4 class="order-title">Americano</h4>
+          <p>Smooth and rich Americano coffee.</p>
+          <span class="order-price">₹299</span>
+          <button class="order-button" onclick="addToCart('Americano', 299)">Add to Cart</button>
+        </div>
+        <div class="order-item">
+          <h4 class="order-title">Espresso</h4>
+          <p>Bold and strong espresso shot.</p>
+          <span class="order-price">₹499</span>
+          <button class="order-button" onclick="addToCart('Espresso', 499)">Add to Cart</button>
+        </div>
+        <div class="order-item">
+          <h4 class="order-title">Cold Coffee</h4>
+          <p>Cold coffee is smooth and creamy.</p>
+          <span class="order-price">₹249</span>
+          <button class="order-button" onclick="addToCart('Cold Coffee', 249)">Add to Cart</button>
+        </div>
+        <div class="order-item">
+          <h4 class="order-title">Black Coffee</h4>
+          <p>Strong, bold black coffee.</p>
+          <span class="order-price">₹349</span>
+          <button class="order-button" onclick="addToCart('Black Coffee', 349)">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="cart" id="cart">
+        <h4>Your Cart</h4>
+        <div id="cartItems"></div>
+        <p class="cart-total" id="cartTotal">Total: ₹0</p>
+        <button class="order-button" onclick="placeOrder()">Place Order</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="popup" id="popup">
+  <h3>🎉 Thank you for your order!</h3>
+  <p>Your ordered get successfully🎉</p>
+  <button class="order-button" onclick="closePopup()">OK</button>
+</div>
+
+<script>
+  let cart = [];
+
+  function addToCart(item, price) {
+    cart.push({ item, price });
+    displayCart();
+  }
+
+  function displayCart() {
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    
+    cartItems.innerHTML = '';
+    let total = 0;
+    
+    cart.forEach((cartItem, index) => {
+      total += cartItem.price;
+      cartItems.innerHTML += `
+        <div class="cart-item">
+          <span>${cartItem.item}</span>
+          <span>₹${cartItem.price}</span>
+          <button onclick="removeFromCart(${index})">❌</button>
+        </div>
+      `;
+    });
+    
+    cartTotal.textContent = `Total: ₹${total}`;
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    displayCart();
+  }
+
+  function placeOrder() {
+    if (cart.length > 0) {
+      // ✅ Save order in localStorage
+      let orders = JSON.parse(localStorage.getItem("orders")) || [];
+      orders.push({ items: cart, date: new Date().toLocaleString() });
+      localStorage.setItem("orders", JSON.stringify(orders));
+
+      cart = [];
+      displayCart();
+      document.getElementById('popup').classList.add('active');
+    } else {
+      alert("Your cart is empty!");
+    }
+  }
+
+  function closePopup() {
+    document.getElementById('popup').classList.remove('active');
+  }
+</script>
+</body>
+</html>

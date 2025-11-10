@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Coffee Craft</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: #2C3034;
+      color: #fff;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      padding: 15px 0;
+    }
+
+    .navbar-brand {
+      font-weight: 600;
+      color: #b57f50 !important;
+      font-size: 1.4rem;
+    }
+
+    .nav-link {
+      color: #fff !important;
+      font-weight: 500;
+      margin: 0 10px;
+      transition: 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #b57f50 !important;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: url('https://img.freepik.com/free-photo/coffee-beans-dark-background_1150-11184.jpg') center/cover no-repeat;
+      height: 18vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero-section::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(44, 48, 52, 0.6);
+    }
+
+    .hero-text {
+      position: relative;
+      color: #fff;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .hero-text h1 {
+      font-size: 3rem;
+      font-weight: 600;
+    }
+
+    /* Contact Area */
+    .contact-area {
+      background-color: #f4efe9;
+      color: #2C3034;
+      padding: 80px 0;
+    }
+
+    .contact-form input, .contact-form textarea {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 10px;
+      width: 100%;
+      margin-bottom: 5px;
+    }
+
+    .error-msg {
+      color: red;
+      font-size: 13px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    .contact-form button {
+      background-color: #b57f50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    .contact-form button:hover {
+      background-color: #d99a64;
+    }
+
+    .contact-info {
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .contact-info i {
+      color: #b57f50;
+      margin-right: 8px;
+    }
+
+    /* Map */
+    .map iframe {
+      width: 100%;
+      height: 300px;
+      border-radius: 10px;
+      border: none;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1f1f1f;
+      color: #fff;
+      padding: 50px 0;
+    }
+
+    footer h5 {
+      color: #b57f50;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    footer a {
+      color: #ddd;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 8px;
+      transition: 0.3s;
+    }
+
+    footer a:hover {
+      color: #b57f50;
+    }
+
+    /* Back to Home Button */
+    .back-home-btn {
+      background-color: #b57f50;
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: 0.3s;
+      display: inline-block;
+      margin-top: 15px;
+      text-decoration: none;
+    }
+
+    .back-home-btn:hover {
+      background-color: #d99a64;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid #555;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero-section">
+    <div class="hero-text">
+      <h1>Contact Coffee Craft</h1>
+      <p>We’d love to hear from you!</p>
+    </div>
+  </section>
+
+  <!-- Contact Area -->
+  <section class="contact-area">
+    <div class="container">
+      <div class="row g-5 align-items-start">
+        <div class="col-md-6">
+          <h3 class="mb-4">Get in Touch</h3>
+          <div class="contact-info mb-4">
+            <p><i class="bi bi-geo-alt"></i> Coffee Craft Café, Ahmedabad, Gujarat, India</p>
+            <p><i class="bi bi-envelope"></i> coffeecraft@gmail.com</p>
+            <p><i class="bi bi-telephone"></i> +91-9510164514</p>
+          </div>
+          <form class="contact-form" id="contactForm" novalidate>
+            <input type="text" id="name" placeholder="Name">
+            <div class="error-msg" id="nameError">Please enter your name</div>
+
+            <input type="email" id="email" placeholder="Email">
+            <div class="error-msg" id="emailError">Please enter your email</div>
+
+            <input type="text" id="contact" placeholder="Contact Number">
+            <div class="error-msg" id="contactError">Please enter your contact number</div>
+
+            <textarea id="message" rows="4" placeholder="Message"></textarea>
+            <div class="error-msg" id="messageError">Please enter your message</div>
+
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+
+        <div class="col-md-6 map">
+          <h3 class="mb-4">Find Us Here</h3>
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3672.033955761097!2d72.57136227509873!3d23.026181379168443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e84f58a9b0001%3A0x80fdb6e7a7a7ed4d!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1694867285154!5m2!1sen!2sin"
+            allowfullscreen="" loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5>About Coffee Craft</h5>
+          <p>We serve freshly brewed coffee made with passion. Visit Coffee Craft for your perfect cup of happiness.</p>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <a href="index.html" class="back-home-btn">Back to Home</a>
+        </div>
+
+        <div class="col-md-4">
+          <h5>Contact Details</h5>
+          <p>Ahmedabad, Gujarat, India</p>
+          <p>Email: coffeecraft@gmail.com</p>
+          <p>Phone: +91-9510164514</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom mt-3">
+        <p>© 2025 Coffee Craft | Designed with ❤️ for coffee lovers</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.getElementById("contactForm");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      let valid = true;
+
+      const name = document.getElementById("name");
+      const email = document.getElementById("email");
+      const contact = document.getElementById("contact");
+      const message = document.getElementById("message");
+
+      function showError(id) {
+        document.getElementById(id).style.display = "block";
+        valid = false;
+      }
+
+      function hideError(id) {
+        document.getElementById(id).style.display = "none";
+      }
+
+      if (name.value.trim() === "") showError("nameError"); else hideError("nameError");
+      if (email.value.trim() === "") showError("emailError"); else hideError("emailError");
+      if (contact.value.trim() === "") showError("contactError"); else hideError("contactError");
+      if (message.value.trim() === "") showError("messageError"); else hideError("messageError");
+
+      if (valid) {
+        alert("Message submitted successfully!");
+        form.reset();
+      }
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

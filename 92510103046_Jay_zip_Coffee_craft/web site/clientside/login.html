@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Signup - Coffee Craft Café</title>
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box; font-family:Arial, Helvetica, sans-serif;}
+    body {background-color:#2c3034; display:flex; align-items:center; justify-content:center; height:100vh;}
+    .container {width:380px; background:#fff; border-radius:15px; box-shadow:0 4px 20px rgba(0,0,0,0.2); overflow:hidden;}
+    header {text-align:center; font-size:1.5rem; font-weight:bold; padding:20px 0; color:#d2691e;}
+    .form-content {padding:20px 30px;}
+    .field {margin-bottom:15px; position:relative;}
+    .field input, .field textarea, .field select {width:100%; padding:10px 15px; border:1px solid #ccc; border-radius:8px; font-size:14px; outline:none; transition:0.3s;}
+    .field input:focus, .field textarea:focus, .field select:focus {border-color:#d2691e;}
+    .error-msg {color:red; font-size:13px; margin-top:4px; display:none;}
+    .button-field button {width:100%; padding:12px; background:#d2691e; border:none; border-radius:8px; color:#fff; font-size:16px; cursor:pointer; transition:0.3s;}
+    .button-field button:hover {background:#a0522d;}
+    .form-link {text-align:center; font-size:14px; margin-bottom:10px;}
+    .form-link a {color:#d2691e; text-decoration:none; font-weight:bold; cursor:pointer;}
+    .media-options {margin:10px 0; display:flex; justify-content:center; gap:10px;}
+    .media-options a {display:flex; align-items:center; justify-content:center; gap:8px; padding:10px; background:#f1f1f1; color:#333; text-decoration:none; border-radius:8px; transition:0.3s; font-size:14px; flex:1;}
+    .media-options a:hover {background:#ddd;}
+    .google-img {width:18px;}
+    .form {display:none;}
+    .form.active {display:block;}
+    .back-home {display:block; text-align:center; margin:10px 0;}
+    .back-home a {color:#d2691e; font-weight:bold; text-decoration:none;}
+    .back-home a:hover {color:#a0522d;}
+  </style>
+</head>
+<body>
+
+<section class="container">
+  <!-- Login Form -->
+  <div class="form login active">
+    <header>Login</header>
+    <div class="form-content">
+      <form id="login-form" novalidate>
+        <div class="field input-field">
+          <input type="email" name="email" placeholder="Email">
+          <small class="error-msg">Please enter your email</small>
+        </div>
+        <div class="field input-field">
+          <input type="password" name="password" placeholder="Password">
+          <small class="error-msg">Please enter your password</small>
+        </div>
+        <div class="field button-field">
+          <button type="submit">Login</button>
+        </div>
+      </form>
+
+      <div class="form-link">
+        <span>Don't have an account? <a class="signup-link">Signup</a></span>
+      </div>
+
+      <div class="media-options">
+        <a href="#"><i class='bx bxl-facebook'></i> Facebook</a>
+        <a href="#"><img src="images/google.png" alt="" class="google-img"> Google</a>
+      </div>
+
+      <div class="back-home">
+        <a href="index.html">&larr; Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signup Form -->
+  <div class="form signup">
+    <header>Signup</header>
+    <div class="form-content">
+      <form id="signup-form" novalidate>
+        <div class="field input-field">
+          <input type="text" name="name" placeholder="Full Name">
+          <small class="error-msg">Please enter your full name</small>
+        </div>
+        <div class="field input-field">
+          <input type="email" name="email" placeholder="Email">
+          <small class="error-msg">Please enter your email</small>
+        </div>
+        <div class="field input-field">
+          <input type="tel" name="phone" placeholder="Phone Number" pattern="[0-9]{10}">
+          <small class="error-msg">Please enter a valid 10-digit phone number</small>
+        </div>
+        <div class="field input-field">
+          <textarea name="address" placeholder="Address" rows="2"></textarea>
+          <small class="error-msg">Please enter your address</small>
+        </div>
+        <div class="field input-field">
+          <input type="date" name="dob">
+          <small class="error-msg">Please select your date of birth</small>
+        </div>
+        <div class="field input-field">
+          <select name="gender">
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+          <small class="error-msg">Please select your gender</small>
+        </div>
+        <div class="field input-field">
+          <input type="file" name="photo" accept="image/*">
+        </div>
+        <div class="field input-field">
+          <input type="password" name="password" placeholder="Create Password">
+          <small class="error-msg">Please create a password</small>
+        </div>
+        <div class="field input-field">
+          <input type="password" name="confirm_password" placeholder="Confirm Password">
+          <small class="error-msg">Passwords do not match</small>
+        </div>
+        <div class="field button-field">
+          <button type="submit">Signup</button>
+        </div>
+      </form>
+
+      <div class="form-link">
+        <span>Already have an account? <a class="login-link">Login</a></span>
+      </div>
+
+      <div class="media-options">
+        <a href="#"><i class='bx bxl-facebook'></i> Facebook</a>
+        <a href="#"><img src="images/google.png" alt="" class="google-img"> Google</a>
+      </div>
+
+      <div class="back-home">
+        <a href="index.html">&larr; Back to Home</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Toggle forms
+  const signupLink = document.querySelector(".signup-link");
+  const loginLink = document.querySelector(".login-link");
+  const loginFormDiv = document.querySelector(".form.login");
+  const signupFormDiv = document.querySelector(".form.signup");
+
+  signupLink.addEventListener("click", () => {
+    loginFormDiv.classList.remove("active");
+    signupFormDiv.classList.add("active");
+  });
+  loginLink.addEventListener("click", () => {
+    signupFormDiv.classList.remove("active");
+    loginFormDiv.classList.add("active");
+  });
+
+  const defaultPhoto = "images/default-user.jpg";
+
+  // Helper to show inline error
+  function showError(input, message) {
+    const field = input.parentElement;
+    const error = field.querySelector(".error-msg");
+    if (error) {
+      error.textContent = message;
+      error.style.display = "block";
+      input.style.borderColor = "red";
+    }
+  }
+
+  function clearError(input) {
+    const field = input.parentElement;
+    const error = field.querySelector(".error-msg");
+    if (error) {
+      error.style.display = "none";
+      input.style.borderColor = "#ccc";
+    }
+  }
+
+  // LOGIN FORM VALIDATION
+  document.getElementById("login-form").addEventListener("submit", function(e){
+    e.preventDefault();
+    const email = this.email;
+    const password = this.password;
+    let valid = true;
+
+    if (email.value.trim() === "") { showError(email, "Please enter your email"); valid = false; }
+    else { clearError(email); }
+
+    if (password.value.trim() === "") { showError(password, "Please enter your password"); valid = false; }
+    else { clearError(password); }
+
+    if (!valid) return;
+
+    const storedName = localStorage.getItem("userName") || "Guest";
+    const storedPhoto = localStorage.getItem("userPhoto") || defaultPhoto;
+    localStorage.setItem("userName", storedName);
+    localStorage.setItem("userPhoto", storedPhoto);
+    alert("Login Successful! Welcome " + storedName);
+    window.location.href = "index.html";
+  });
+
+  // SIGNUP FORM VALIDATION
+  document.getElementById("signup-form").addEventListener("submit", function(e){
+    e.preventDefault();
+    let valid = true;
+    const name = this.name;
+    const email = this.email;
+    const phone = this.phone;
+    const address = this.address;
+    const dob = this.dob;
+    const gender = this.gender;
+    const password = this.password;
+    const confirm = this.confirm_password;
+    const photoInput = this.photo;
+
+    // Validation
+    if (name.value.trim() === "") { showError(name, "Please enter your full name"); valid = false; } else { clearError(name); }
+    if (email.value.trim() === "") { showError(email, "Please enter your email"); valid = false; } else { clearError(email); }
+    if (phone.value.trim().length !== 10) { showError(phone, "Please enter a valid 10-digit phone number"); valid = false; } else { clearError(phone); }
+    if (address.value.trim() === "") { showError(address, "Please enter your address"); valid = false; } else { clearError(address); }
+    if (dob.value === "") { showError(dob, "Please select your date of birth"); valid = false; } else { clearError(dob); }
+    if (gender.value === "") { showError(gender, "Please select your gender"); valid = false; } else { clearError(gender); }
+    if (password.value.trim() === "") { showError(password, "Please create a password"); valid = false; } else { clearError(password); }
+    if (confirm.value.trim() === "" || confirm.value !== password.value) { showError(confirm, "Passwords do not match"); valid = false; } else { clearError(confirm); }
+
+    if (!valid) return;
+
+    const userName = name.value.trim();
+    if(photoInput.files && photoInput.files[0]){
+      const reader = new FileReader();
+      reader.onload = () => {
+        localStorage.setItem("userName", userName);
+        localStorage.setItem("userPhoto", reader.result);
+        alert("Signup Successful! Welcome " + userName);
+        window.location.href = "index.html";
+      };
+      reader.readAsDataURL(photoInput.files[0]);
+    } else {
+      localStorage.setItem("userName", userName);
+      localStorage.setItem("userPhoto", defaultPhoto);
+      alert("Signup Successful! Welcome " + userName);
+      window.location.href = "index.html";
+    }
+  });
+
+  // Redirect if already logged in
+  if (localStorage.getItem("userName")) {
+    // window.location.href = "index.html";
+  }
+</script>
+
+</body>
+</html>

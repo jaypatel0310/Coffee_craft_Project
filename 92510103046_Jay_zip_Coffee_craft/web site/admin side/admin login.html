@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login & Signup - Coffee Craft</title>
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box; font-family:Arial, Helvetica, sans-serif;}
+    body {background-color:#2c3034; display:flex; align-items:center; justify-content:center; height:100vh;}
+    .container {width:400px; background:#fff; border-radius:15px; box-shadow:0 4px 20px rgba(0,0,0,0.2); overflow-y:auto; max-height:90vh;}
+    header {text-align:center; font-size:1.6rem; font-weight:bold; padding:20px 0; color:#d2691e;}
+    .form-content {padding:20px 30px;}
+    .field {margin-bottom:15px;}
+    .field input, .field select, .field textarea {width:100%; padding:10px 15px; border:1px solid #ccc; border-radius:8px; font-size:14px;}
+    .field input:focus, .field select:focus, .field textarea:focus {border-color:#d2691e;}
+    .button-field button {width:100%; padding:12px; background:#d2691e; border:none; border-radius:8px; color:#fff; font-size:16px; cursor:pointer;}
+    .button-field button:hover {background:#a0522d;}
+    .form-link {text-align:center; font-size:14px; margin:10px 0;}
+    .form-link a {color:#d2691e; text-decoration:none; font-weight:bold; cursor:pointer;}
+    .form {display:none;}
+    .form.active {display:block;}
+    .back-home {text-align:center; margin:15px 0;}
+    .back-home a {color:#d2691e; font-weight:bold; text-decoration:none;}
+    .error-msg {color:red; font-size:13px; margin-top:5px; display:none;}
+  </style>
+</head>
+<body>
+
+<section class="container">
+  <!-- Admin Login -->
+  <div class="form login active">
+    <header>Admin Login</header>
+    <div class="form-content">
+      <form id="admin-login-form" novalidate>
+        <div class="field">
+          <input type="email" id="adminEmailLogin" placeholder="Email">
+          <span class="error-msg" id="loginEmailError">Please enter email</span>
+        </div>
+        <div class="field">
+          <input type="password" id="adminPassLogin" placeholder="Password">
+          <span class="error-msg" id="loginPassError">Please enter password</span>
+        </div>
+        <div class="button-field"><button type="submit">Login</button></div>
+      </form>
+      <div class="form-link">
+        <span>Don’t have an account? <a class="signup-link">Signup</a></span>
+      </div>
+      <div class="back-home"><a href="C:\COLLEGE\B.Tech\3rd Sem\WT\92510103046_Jay_zip_Coffee_craft_Project\92510103046_Jay_zip_Coffee_craft\web site\clientside\index.html">&larr; Back to Home</a></div>
+    </div>
+  </div>
+
+  <!-- Admin Signup -->
+  <div class="form signup">
+    <header>Admin Signup</header>
+    <div class="form-content">
+      <form id="admin-signup-form" novalidate>
+        <div class="field">
+          <input type="text" id="adminFullName" placeholder="Full Name">
+          <span class="error-msg" id="nameError">Please enter your name</span>
+        </div>
+        <div class="field">
+          <input type="email" id="adminEmailSignup" placeholder="Email">
+          <span class="error-msg" id="emailError">Please enter email</span>
+        </div>
+        <div class="field">
+          <input type="tel" id="adminPhone" placeholder="Phone Number">
+          <span class="error-msg" id="phoneError">Please enter phone number</span>
+        </div>
+        <div class="field">
+          <textarea id="adminAddress" placeholder="Address" rows="2"></textarea>
+          <span class="error-msg" id="addressError">Please enter address</span>
+        </div>
+        <div class="field">
+          <input type="date" id="adminDob">
+          <span class="error-msg" id="dobError">Please select date of birth</span>
+        </div>
+        <div class="field">
+          <select id="adminGender">
+            <option value="" disabled selected>Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+          <span class="error-msg" id="genderError">Please select gender</span>
+        </div>
+        <div class="field">
+          <input type="password" id="adminPassSignup" placeholder="Create Password">
+          <span class="error-msg" id="passError">Please enter password</span>
+        </div>
+        <div class="field">
+          <input type="password" id="adminConfirmPass" placeholder="Confirm Password">
+          <span class="error-msg" id="confirmError">Please confirm password</span>
+        </div>
+        <div class="button-field"><button type="submit">Signup</button></div>
+      </form>
+      <div class="form-link">
+        <span>Already have an account? <a class="login-link">Login</a></span>
+      </div>
+      <div class="back-home"><a href="C:\COLLEGE\B.Tech\3rd Sem\WT\92510103046_Jay_zip_Coffee_craft_Project\92510103046_Jay_zip_Coffee_craft\web site\clientside\index.html">&larr; Back to Home</a></div>
+    </div>
+  </div>
+</section>
+
+<script>
+const signupLink = document.querySelector(".signup-link");
+const loginLink = document.querySelector(".login-link");
+const loginFormDiv = document.querySelector(".form.login");
+const signupFormDiv = document.querySelector(".form.signup");
+
+signupLink.addEventListener("click", () => {
+  loginFormDiv.classList.remove("active");
+  signupFormDiv.classList.add("active");
+});
+loginLink.addEventListener("click", () => {
+  signupFormDiv.classList.remove("active");
+  loginFormDiv.classList.add("active");
+});
+
+// Inline validation for Signup
+document.getElementById("admin-signup-form").addEventListener("submit", function(e){
+  e.preventDefault();
+  let valid = true;
+
+  function showError(id){ document.getElementById(id).style.display = "block"; valid = false; }
+  function hideError(id){ document.getElementById(id).style.display = "none"; }
+
+  const name = adminFullName.value.trim();
+  const email = adminEmailSignup.value.trim();
+  const phone = adminPhone.value.trim();
+  const address = adminAddress.value.trim();
+  const dob = adminDob.value.trim();
+  const gender = adminGender.value;
+  const pass = adminPassSignup.value.trim();
+  const confirm = adminConfirmPass.value.trim();
+
+  if(!name) showError("nameError"); else hideError("nameError");
+  if(!email) showError("emailError"); else hideError("emailError");
+  if(!phone) showError("phoneError"); else hideError("phoneError");
+  if(!address) showError("addressError"); else hideError("addressError");
+  if(!dob) showError("dobError"); else hideError("dobError");
+  if(!gender) showError("genderError"); else hideError("genderError");
+  if(!pass) showError("passError"); else hideError("passError");
+  if(!confirm) showError("confirmError"); else hideError("confirmError");
+
+  if(pass && confirm && pass !== confirm){
+    document.getElementById("confirmError").textContent = "Passwords do not match";
+    document.getElementById("confirmError").style.display = "block";
+    valid = false;
+  }
+
+  if(valid){
+    localStorage.setItem("adminEmail", email);
+    localStorage.setItem("adminPass", pass);
+    localStorage.setItem("adminName", name);
+    alert("Signup successful! Please login.");
+    signupFormDiv.classList.remove("active");
+    loginFormDiv.classList.add("active");
+  }
+});
+
+// Inline validation for Login
+document.getElementById("admin-login-form").addEventListener("submit", function(e){
+  e.preventDefault();
+  let valid = true;
+
+  const email = adminEmailLogin.value.trim();
+  const pass = adminPassLogin.value.trim();
+
+  if(!email){ document.getElementById("loginEmailError").style.display = "block"; valid=false; }
+  else document.getElementById("loginEmailError").style.display = "none";
+  
+  if(!pass){ document.getElementById("loginPassError").style.display = "block"; valid=false; }
+  else document.getElementById("loginPassError").style.display = "none";
+
+  if(!valid) return;
+
+  const savedEmail = localStorage.getItem("adminEmail");
+  const savedPass = localStorage.getItem("adminPass");
+
+  if(email === savedEmail && pass === savedPass){
+    alert("Login successful!");
+    window.location.href = "admin dashboard.html";
+  } else {
+    alert("Invalid email or password!");
+  }
+});
+</script>
+
+</body>
+</html>

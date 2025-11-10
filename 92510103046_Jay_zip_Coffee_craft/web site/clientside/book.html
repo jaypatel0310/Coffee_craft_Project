@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Table - Coffee Craft Café</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root { --section-bg: #2c3034; --primary-color: #d2691e; --primary-dark: #a0522d; }
+    body { background-color: var(--section-bg); min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; margin: 0; }
+    header { width: 100%; padding: 15px 0; position: absolute; top: 0; left: 0; text-align: center; }
+    .booking-card { background: #fff; border-radius: 15px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 600px; width: 100%; margin-top: 80px; }
+    h2 { color: var(--primary-dark); }
+    .form-control, .form-select { border-radius: 10px; }
+    .btn-custom { background-color: var(--primary-color); color: #fff; font-weight: bold;
+      border-radius: 10px; transition: 0.3s; }
+    .btn-custom:hover { background-color: var(--primary-dark); }
+    .back-home { display: block; text-align: center; margin-top: 15px; text-decoration: none; padding: 10px 15px;
+      background-color: var(--primary-color); color: #fff; border-radius: 10px; font-weight: bold; transition: 0.3s; }
+    .back-home:hover { background-color: var(--primary-dark); color: #fff; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <nav class="nav container flex justify-content-center">
+        <a href="index.html" class="logo-content flex text-decoration-none">
+            <span class="logo-text text-white fs-4 fw-bold"> Coffee Craft</span>
+        </a>
+    </nav>
+  </header>
+
+  <div class="booking-card">
+    <h2 class="text-center mb-4">Book Your Table</h2>
+    <form id="bookingForm">
+      <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="name" required>
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input type="tel" class="form-control" id="phone" required>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="email" required>
+      </div>
+      <div class="mb-3 row">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <label for="date" class="form-label">Date</label>
+          <input type="date" class="form-control" id="date" required>
+        </div>
+        <div class="col-md-6">
+          <label for="time" class="form-label">Time</label>
+          <input type="time" class="form-control" id="time" required>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="guests" class="form-label">Number of Guests</label>
+        <select class="form-select" id="guests" required>
+          <option selected disabled>Choose...</option>
+          <option>1 Person</option>
+          <option>2 People</option>
+          <option>3 People</option>
+          <option>4 People</option>
+          <option>5+ People</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="message" class="form-label">Special Requests</label>
+        <textarea class="form-control" id="message" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn btn-custom w-100">Book Now</button>
+    </form>
+    <a href="index.html" class="back-home">⬅ Back to Home</a>
+  </div>
+
+  <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-warning">
+          <h5 class="modal-title" id="bookingModalLabel">Booking Successful</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center">
+          ✅ Thank you! Your table has been booked successfully.<br>
+          We’ll contact you shortly.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-custom" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const form = document.getElementById("bookingForm");
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const booking = {
+        name: document.getElementById("name").value,
+        phone: document.getElementById("phone").value,
+        email: document.getElementById("email").value,
+        date: document.getElementById("date").value,
+        time: document.getElementById("time").value,
+        guests: document.getElementById("guests").value,
+        message: document.getElementById("message").value,
+        createdAt: new Date().toLocaleString()
+      };
+
+      // ✅ Save booking in localStorage
+      let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+      bookings.push(booking);
+      localStorage.setItem("bookings", JSON.stringify(bookings));
+
+      form.reset();
+      const bookingModal = new bootstrap.Modal(document.getElementById('bookingModal'));
+      bookingModal.show();
+    });
+  </script>
+</body>
+</html>
